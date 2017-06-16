@@ -1,6 +1,26 @@
 window.onload = function(){
 
-  function showChart(){
+  function showChart(tasks){
+    var counts = [
+      {level:"Very Easy", count:0},
+      {level:"Easy", count:0},
+      {level:"Medium", count:0},
+      {level:"Hard", count:0},
+      {level:"Very Hard", count:0}
+    ]; // holds total counts for each level
+
+    // loop through tasks and count each level
+    for (var i=0; i<tasks.length; i++){
+      counts[tasks[i].level].count++;
+    }
+
+    // build an array of arrays
+    var rows = new Array();
+    for (var j=0; j<counts.length; j++){
+      rows.push([counts[j].level, counts[j].count]);
+    }
+
+
     // Load the Visualization API and the corechart package.
           google.charts.load('current', {'packages':['corechart']});
 
@@ -14,18 +34,21 @@ window.onload = function(){
 
             // Create the data table.
             var data = new google.visualization.DataTable();
-            data.addColumn('string', 'Topping');
-            data.addColumn('number', 'Slices');
+            data.addColumn('string', 'Difficulty');
+            data.addColumn('number', 'Level');
+            data.addRows(rows);
+
+            /*
             data.addRows([
               ['Mushrooms', 3],
               ['Onions', 1],
               ['Olives', 1],
               ['Zucchini', 1],
               ['Pepperoni', 2]
-            ]);
+            ]);*/
 
             // Set chart options
-            var options = {'title':'How Much Pizza I Ate Last Night',
+            var options = {'title':'Percent of Difficulty',
                            'width':400,
                            'height':300};
 
@@ -56,7 +79,7 @@ window.onload = function(){
 
     // update list
     showList();
-    showChart();
+    showChart(tasks);
 
     // reset form
     form.reset();
@@ -104,5 +127,5 @@ window.onload = function(){
   var form = document.forms[0];
   form.addEventListener("submit", addTask);
 
-  showChart();
+  showChart(tasks);
 }
