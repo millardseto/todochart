@@ -1,6 +1,14 @@
 window.onload = function() {
 
+
+  /**
+   * showChart - Shows pie chart of tasks by level of difficulty
+   *
+   * @param  {array} tasks array of tasks
+   * @return {undefined}
+   */
   function showChart(tasks) {
+    // no point in doing anything if there are no tasks
     if (tasks.length == 0) {
       return;
     }
@@ -19,7 +27,8 @@ window.onload = function() {
     // build an array of arrays
     var rows = new Array();
     for (var j = 0; j < counts.length; j++) {
-      rows.push([levels[j], counts[j]]);
+      // push an array containing [level description, total count of level]
+      rows.push( [levels[j], counts[j]] );
     }
 
 
@@ -90,14 +99,12 @@ window.onload = function() {
   /**
    * showList - creates a listItem(s) for each task
    *
-   * @return {type}  description
+   * @return {undefined}  description
    */
   function showList() {
     // clear existing content
     var ul = document.querySelector('ul');
     ul.innerText = "";
-
-
 
     // go through each task
     for (var i = 0; i < tasks.length; i++) {
@@ -123,9 +130,11 @@ window.onload = function() {
   // container for tasks
   var tasks = [];
 
-  // submit button
+  // wire up submit button
   var form = document.forms[0];
   form.addEventListener("submit", addTask);
 
-  showChart(tasks);
+  // Future use:  if we load data from a datasource, show list and chart.
+  // showChart(tasks);
+  // showList();
 }
