@@ -1,37 +1,25 @@
 window.onload = function() {
 
   function showChart(tasks) {
-    var counts = [{
-        level: "Very Easy",
-        count: 0
-      },
-      {
-        level: "Easy",
-        count: 0
-      },
-      {
-        level: "Medium",
-        count: 0
-      },
-      {
-        level: "Hard",
-        count: 0
-      },
-      {
-        level: "Very Hard",
-        count: 0
-      }
-    ]; // holds total counts for each level
+    if (tasks.length == 0) {
+      return;
+    }
+    var counts = []; // holds total counts for each level
+
+    // initialize counts for each level
+    for (var k=0; k<levels.length; k++){
+      counts.push(0);
+    }
 
     // loop through tasks and count each level
     for (var i = 0; i < tasks.length; i++) {
-      counts[tasks[i].level].count++;
+      counts[tasks[i].level]++;
     }
 
     // build an array of arrays
     var rows = new Array();
     for (var j = 0; j < counts.length; j++) {
-      rows.push([counts[j].level, counts[j].count]);
+      rows.push([levels[j], counts[j]]);
     }
 
 
@@ -109,14 +97,7 @@ window.onload = function() {
     var ul = document.querySelector('ul');
     ul.innerText = "";
 
-    // dictionary object for lookups - might need to be global var in the future.
-    var levels = [
-      "Very Easy",
-      "Easy",
-      "Medium",
-      "Hard",
-      "Very Hard"
-    ];
+
 
     // go through each task
     for (var i = 0; i < tasks.length; i++) {
@@ -130,7 +111,14 @@ window.onload = function() {
     }
   }
 
-
+  // global dictionary object for lookups
+  levels = [
+    "Very Easy",
+    "Easy",
+    "Medium",
+    "Hard",
+    "Very Hard"
+  ];
 
   // container for tasks
   var tasks = [];
